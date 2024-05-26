@@ -1,0 +1,129 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+:root{
+    --negro : rgb(10 10 10);
+    --gris : rgb(150 150 150);
+    --amarillo : rgb(212, 245, 47);
+    --rojo : rgb(242, 7, 7);
+    --verde : rgb(0 240 0);
+}
+
+
+body{
+    min-height: 100vh;
+}
+
+.main_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+
+
+.delete_session{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    border-radius: 20px;
+    background: red;
+    padding: 4px 10px;
+}
+
+.delete_session p:hover{
+    scale: 1.2;
+    cursor: pointer;
+}
+
+.welcome_container{
+    margin-top: 30px;
+    width: 100%;
+}
+
+.welcome_container h2{
+    text-align: center;
+    font-size: 1.6em;
+}
+
+
+.products_container{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    grid-template-rows: repeat(auto-fill, minmax(200px,max-content));
+}
+
+.product{
+    height: 100%;
+    margin: 0 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.img_product_container{
+    min-height: 120px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+}
+
+.product_content_container{
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    min-height: 67px;
+}
+
+.product_title_container h4{
+    text-align: center;
+}
+
+.price_container{
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100%;
+}
+
+.price_symbol{
+    margin-right: 4px;
+}
+
+.button_container{
+    width: 100%;
+    margin: 10px 5px;
+    border-radius: 20px;
+    padding: 8px 5px;
+    background: var(--verde);
+    display: flex;
+    justify-content: center;
+}
+
+.button_container p{
+    font-size: 1em;
+    color: var(--negro);
+}
+
+@media screen and (min-width:720px){
+    .products_container{
+        display: grid;
+        grid-template-columns: repeat(3,250px);
+        justify-content: center;
+    }
+
+    .product{
+        width: 100%;
+        max-width: 200px;
+    }
+}
+

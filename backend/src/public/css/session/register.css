@@ -1,0 +1,98 @@
+:root{
+    --grisClaro : rgb(196, 186, 186);
+    --negro : rgb(10 10 10);
+    --morado : rgb(54, 23, 208);
+    --celeste : rgb(85, 171, 240);
+    --blanco : rgb(245 245 245);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body{
+    height: 100vh;
+    background: var(--grisClaro);
+}
+
+.main_container{
+    height: 100%;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_container{
+    position: relative;
+    max-width: 600px;
+    background: var(--blanco);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    padding: 45px 35px 10px 35px;
+}
+
+.redirect_login{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.redirect_home i{
+    font-size: 1em;
+}
+
+.app_title_container h3{
+    font-size: 1.2em;
+}
+
+.inputs_container{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.input_container{
+    width: 100%;
+    margin: 10px;
+    border-bottom: 1px solid var(--grisClaro);
+}
+
+.input_container input{
+    border: none;
+    outline: none;
+    padding: 4px 5px 6px 2px;
+    font-size: 1em;
+    background: transparent;
+}
+
+.send_form_container{
+    margin-top: 30px;
+    display: flex;
+    width: 100%;
+    border-radius: 20px;
+    padding: 8px 10px;
+    justify-content: center;
+    background: linear-gradient(to right,var(--celeste),var(--morado));
+    cursor: pointer;
+}
+
+.send_form_container p{
+    font-size: 1.1em;
+}
+
+.error_form{
+    text-align: center;
+    width: 100%;
+    color: red;
+}
+
+.exit_form{
+    text-align: center;
+    width: 100%;
+    color: green;
+}
