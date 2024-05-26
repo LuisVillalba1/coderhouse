@@ -2,7 +2,7 @@ import { productModel } from "../models/productsModel.js";
 import { io } from "../app.js";
 import { ProductManager } from "../config/productManager.js";
 import { faker } from "@faker-js/faker";
-import {createLoggerWarning } from "../utils/logger.js";
+import {createLoggerError} from "../utils/logger.js";
 
 //obtenemos la configuracion para ver la ruta principal de productos
 export function productMain(){
@@ -30,7 +30,7 @@ export async function getProductById(req,id,res){
 
     }
     catch(e){
-        createLoggerWarning(req,e);
+        createLoggerError(req,e);
         return res.status(500).send("Ha ocurrido un error");
     }
 }

@@ -1,5 +1,5 @@
 import { productModel } from "../models/productsModel.js";
-import { createLoggerWarning } from "../utils/logger.js";
+import { createLoggerError} from "../utils/logger.js";
 import { io } from "../app.js";
 
 //eliminamos ciertas propiedades
@@ -252,7 +252,7 @@ export class ProductManager{
         if(e instanceof Error){
             return res.status(404).send(e.message);
         }
-        createLoggerWarning(req.e);
+        createLoggerError(req,e);
         return res.status(500).send("Ha ocurrido un error");
     }
 }
@@ -278,7 +278,7 @@ export class ProductManager{
         if(e instanceof Error){
             return res.status(404).send(e.message)
         }
-        createLoggerWarning(req,e)
+        createLoggerError(req,e)
         return res.send(500).send("Ha ocurrido un error inesperado");
     }
 }

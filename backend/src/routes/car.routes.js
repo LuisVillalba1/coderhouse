@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {createLoggerWarning} from "../utils/logger.js"
+import {createLoggerError} from "../utils/logger.js"
 import * as cartController from "../controllers/cartsController.js"
 
 const carstRouter = Router();
@@ -14,7 +14,7 @@ carstRouter.post("/",async (req,res)=>{
         })
     }
     catch(e){
-        createLoggerWarning(req,e);
+        createLoggerError(req,e);
         return res.json({message : "Ha ocurrido un error al crear el carrito"});
     }
 })
@@ -32,7 +32,7 @@ carstRouter.get("/:cid",async(req,res)=>{
         if(e instanceof Error){
             return res.status(404).send(e.message)
         }
-        createLoggerWarning(req,e);
+        createLoggerError(req,e);
         return res.status(500).send("Ha ocurrido un error")
     }
 })
@@ -51,7 +51,7 @@ carstRouter.post("/:cid/product/:pid",async(req,res)=>{
         if(e instanceof Error){
             return res.status(404).send({message : e.message})
         }
-        createLoggerWarning(req,e)
+        createLoggerError(req,e)
         return res.status(500).send({message : "Ha ocurrido un erorr inesperado"});
     }
 })
@@ -69,7 +69,7 @@ carstRouter.delete("/:cid/product/:pid",async (req,res)=>{
         if(e instanceof Error){
             return res.status(404).send(e.message)
         }
-        createLoggerWarning(req,e)
+        createLoggerError(req,e)
         return res.status(500).send(e)
     }
 })
@@ -87,7 +87,7 @@ carstRouter.delete("/:cid",async(req,res)=>{
         if(e instanceof Error){
             return res.status(404).send(e.message)
         }
-        createLoggerWarning(req,e)
+        createLoggerError(req,e)
         return res.send(e);
     }
 })
@@ -106,7 +106,7 @@ carstRouter.put("/:cid",async(req,res)=>{
         if(e instanceof Error){
             return res.status(404).send(e.message)
         }
-        createLoggerWarning(req,e)
+        createLoggerError(req,e)
         return res.status(500).send(e)
     }
 })
@@ -125,7 +125,7 @@ carstRouter.put("/:cid/products/:pid",async(req,res)=>{
         if(e instanceof Error){
             return res.status(404).send(e.message)
         }
-        createLoggerWarning(req,e)
+        createLoggerError(req,e)
         return res.status(500).send(e);
     }
 })
@@ -141,7 +141,7 @@ carstRouter.post("/:cid/purcharse",async(req,res)=>{
         if(e instanceof Error){
             return res.status(404).send(e.message);
         }
-        createLoggerWarning(req,e);
+        createLoggerError(req,e);
         return res.status(500).send({message : "Ha ocurrido un error inesperado,por favor intentelo mas tarde"});
     }
 })

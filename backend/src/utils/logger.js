@@ -10,7 +10,7 @@ const customLevelsOptions = {
     },
     colors : {
         fatal : "red",
-        error : "orange",
+        error : "red",
         warning : "yellow",
         info : "blue",
         debug : "cyan",
@@ -53,5 +53,5 @@ export const createLoggerWarning = (req,e)=>{
 }
 
 export const createLoggerError = (req,message)=>{
-    req.logger.warning(`${message} en ${req.url} - ${new Date()}`);
+    req.logger.error(`${message} en ${req.url} - ${new Date()}`);
 }

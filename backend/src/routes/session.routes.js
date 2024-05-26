@@ -3,8 +3,6 @@ import { redirectMainProducts } from "../middlewares/userYetLoginMiddleware.js";
 import * as sessionController from "../controllers/sessionController.js"
 import passport from "passport";
 import { dotenvValues } from "../config.js";
-import { createLoggerWarning } from "../utils/logger.js";
-
 const sessionRoute = Router();
 
 //view para logear al usuario
