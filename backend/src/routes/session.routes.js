@@ -17,6 +17,16 @@ sessionRoute.post("/login",(req, res) => {
 });
 
 
+//recuperamos la cuenta del usuario enviadole un mail para cambiarla
+sessionRoute.post("/recuperateAccount",(req,res)=>{
+    return sessionController.recuperateAccount(req,res)
+});
+
+//cambiamos la contraseña del usuario
+sessionRoute.post("/changePassword",(req,res)=>{
+    return sessionController.changePassword(req,res);
+})
+
 //vista para registrarse
 sessionRoute.get("/register",(req,res)=>{
     return res.render("register",sessionController.registerStatics())

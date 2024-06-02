@@ -3,6 +3,8 @@ import LoginView from "../views/LoginView.vue"
 import RegisterView from "../views/RegisterView.vue"
 import ProductsView from '@/views/app/ProductsView.vue'
 import { useAuth } from '@/stores/Auth'
+import RecuperatePassword from '@/views/RecuperatePassword.vue'
+import ChangePasswordView from "@/views/ChangePasswordView.vue"
 
 
 const router = createRouter({
@@ -15,6 +17,19 @@ const router = createRouter({
       meta : {
         transitionAuth : "login",
         authentication : false
+      }
+    },
+    {
+      path : "/recuperateAccount",
+      name : "recuperateAccount",
+      component : RecuperatePassword
+    },
+    {
+      path : "/reset-password",
+      name : "changePassword",
+      component : ChangePasswordView,
+      meta : {
+        
       }
     },
     {
@@ -50,6 +65,9 @@ router.beforeEach(async (to,from,next)=>{
     catch(e){
       return next("/login")
     }
+  }
+  if(to.name == "changePassword" && !to.query.token){
+    return next("/login");
   }
   next()
 })

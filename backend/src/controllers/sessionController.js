@@ -1,43 +1,19 @@
 import passport from "passport";
 import { userModel } from "../models/userModel.js";
 import { generateCrypt } from "../config/crypt.js";
+import { mailer } from "../config/mailer.js";
 import { dotenvValues } from "../config.js";
-
-//verificamos si la propiedad es valida
-function checkCorrectPropertyes(content,values){
-    const keysCotent = Object.keys(content);
-
-    for(let i of keysCotent){
-        if(!values.includes(i)){
-            throw new Error(`propiedad ${i} invalida,por favor ingrese las propiedades validas,404`)
-        }
-    }
-}
-
-//verificamos si ya existe un usuario con ese mail
-async function checkExistEmail(email){
-    const emailFound = await userModel.find({email : email});
-    if(emailFound.length > 0){
-        throw new Error("Ya existe una cuenta con ese email,404");
-    }
-}
-
-//verificamos que se haya ingresado la propiedad con un valor
-function chekLengthPropertyes(body){
-    for(let i in body){
-        if(body[i].length <= 0){
-            throw new Error(`Por favor ingrese un ${i},`)
-        }
-    }
-}
+import { SessionManager } from "../config/sessionManager.js";
+import { createLoggerError } from "../utils/logger.js";
 
 export async function registerUser(body){
     const values = ["name","lastName","email","password"];
     //verificamos que solo se ingrese las propiedades pedidas
-    checkCorrectPropertyes(body,values);
-    chekLengthPropertyes(body)
+    let manager = new SessionManager();
+    manager.checkCorrectPropertyes(body,values)
+    manager.chekLengthPropertyes(body);
     //verificamos si existe o no un usuario con ese mail
-    await checkExistEmail(body.email);
+    await manager.checkExistEmail(body.email)
     await userModel.create({name : body.name,lastName : body.lastName,email : body.email,password : await generateCrypt(body.password)});
 }
 
@@ -62,8 +38,67 @@ export function loginAuthenticate(req,res){
     })(req, res);
 }
 
-//retornamos los scripts que va utilizar nuestro archivo estatico para la ruta register
 
+//recuperamos la cuenta del usuario
+
+export async function recuperateAccount(req,res){
+    try{
+        //verificamos que se introducta un email y que exista el mismo registrado en la base de datos
+        if(!req.body.email || req.body.length <= 0){
+            throw new Error("Por favor ingrese un email")
+        }
+        let manager = new SessionManager();
+        await manager.checkEmailRegister(req.body.email);
+        let link = await manager.linkChangePassword(req.body.email);
+        let mail = await mailer.sendMail({
+            from : `coderhouseProyect <${dotenvValues.Email}>`,
+            to : req.body.email,
+            subject : "Recuperar cuenta",
+            html : `
+                <p>Necesitamos que crees una nueva contraseña para que puedas volver a utilizar tu cuenta, por favor de click </p>
+                <a href=${link}>aquí</a>
+            `
+        })
+        return res.status(200).send({message : "Mail enviado con exito, por favor chequea tu bandeja de entra y/o spams"})
+    }
+    catch(e){
+        if(e instanceof Error){
+            return res.status(404).send({error : e.message})
+        }
+        createLoggerError(req,e);
+        return res.status(500).send({error : "Ha ocurrido un error inesperado, por favor intentelo mas tarde"})
+    }
+}
+
+
+export function changePassword(req,res){
+    try{
+        //verificamos que exista un token
+        if(!req.query.token){
+            throw new Error("Token no existente");
+        }
+        let manager = new SessionManager();
+
+        //validamos la firma del token
+        let email = manager.verifySignToken(req,req.query.token);
+        console.log(email);
+
+        manager.checkPropertiesPassword(req.body);
+        manager.comparePasswords(req.body);
+        manager.changePassword(email,req.body.password);
+
+        return res.status(201).send({message : "Se ha modificado la contraseña correctamente"});
+    }
+    catch(e){
+        if(e instanceof Error){
+            return res.status(404).send({error : e.message});
+        }
+        createLoggerError(req,e);
+        return res.status(500).send({error : "Ha ocurrido un error al cambiar la contraseña, por favor intentalo mas tarde"});
+    }
+}
+
+//retornamos los scripts que va utilizar nuestro archivo estatico para la ruta register
 export function registerStatics(){
     return {css : "./css/session/register.css",js : "./js/session/register.js"};
 }

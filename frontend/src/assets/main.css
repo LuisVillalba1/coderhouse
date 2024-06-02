@@ -16,11 +16,14 @@
     --blancoTransparent : rgba(255,255,255,0.85);
     --transparent : #ffffff10;
     --blanco : rgb(255 255 255);
+    --grisOscuro : rgb(125, 122, 122);
     --verde : #36b67d;
     --negroClaro : rgb(43, 40, 40);
     --negro : rgb(21, 21, 21);
     --azul : rgb(41, 61, 243);
     --moradoOscuro : rgb(21, 21, 107);
+    --fullNegro : rgb(0 0 0);
+    --rojo : rgb(255, 13, 0);
 }
 
 

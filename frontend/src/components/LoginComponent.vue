@@ -28,6 +28,10 @@
                 <p v-if="errorMessage" class="error_form">{{ errorMessage }}</p>
             </transition>
         </div>
+        <div class="forgot_password_container">
+            <p>¿Olvidaste tu contraseña?</p>
+            <RouterLink to="/recuperateAccount">Recuperala</RouterLink>
+        </div>
         <div class="send_form_container" @click="login">
             <p>Iniciar sesion</p>
         </div>
@@ -42,7 +46,7 @@
     import {RouterLink} from "vue-router"
     import { useAuth } from '@/stores/Auth';
     import { useLabelAuthComposable } from '@/composables/LabelAuthComposable';
-import router from '@/router';
+    import router from '@/router';
     
 
     const labelTransform = reactive({
@@ -162,6 +166,17 @@ import router from '@/router';
         outline: none;
         padding: 8px 10px 4px 0;
         font-size: 1em;
+    }
+
+    .forgot_password_container{
+        display: flex;
+        width: 100%;
+        justify-content: end;
+    }
+
+
+    .forgot_password_container a{
+        margin-left: 5px;
     }
 
     .send_form_container{

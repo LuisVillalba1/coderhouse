@@ -1,4 +1,3 @@
-import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
 import axios from "axios";
@@ -28,7 +27,23 @@ export const useAuth = defineStore("auth",{
             })
             return response;
         },
-    
+        
+        async recuperateAccount(email){
+            const response = await axios.post("/recuperateAccount",{
+                email : email
+            })
+            return response;
+        },
+
+        //cambiamos la contraseña del usuario
+        async changePassword(data){
+            const querystring = window.location.search;
+            const params = new URLSearchParams(querystring);
+            const response = await axios.post(`/changePassword?token=${params.get("token")}`,data);
+            return response
+        },
+
+        //obtenemos la informacion del usuario
         async current(){
             const response = await axios.get("/current");
             this.name = response.data.name;

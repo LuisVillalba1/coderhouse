@@ -1,5 +1,6 @@
 <template>
-    <transition name="register">
+    <div class="register_content_container">
+        <transition name="register">
         <div class="succes_register_container" v-if="succesRegister">
             <h3>Su cuenta ha sido creada con exito</h3>
         </div>
@@ -49,13 +50,14 @@
             <p>Registrarse</p>
         </div>
     </div>
+    </div>
 </template>
 
 <script setup>
     import {reactive,ref} from "vue";
-    import { useLabelAuthComposable } from '@/composables/LabelAuthComposable';
     import { useAuth } from "@/stores/Auth";
     import { RouterLink } from "vue-router";
+    import { useLabelAuthComposable } from '@/composables/LabelAuthComposable';
 
     const labelTransform = reactive({
         name : false,
@@ -95,6 +97,10 @@
 </script>
 
 <style scoped>
+    .register_content_container{
+        width: 100%;
+        max-width: 480px;
+    }
     .succes_register_container{
         position: absolute;
         width: 100%;
@@ -126,7 +132,6 @@
         justify-content: center;
         flex-direction: column;
         width: 100%;
-        max-width: 480px;
         height: 500px;
         animation: rotate 1s ease 0s normal none;
         position: relative;
