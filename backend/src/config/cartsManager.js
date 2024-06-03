@@ -25,12 +25,17 @@ async function getAllProductsModel(productsToBuy){
 
 
 //obtenemos el precio total de la compra
-function getTotalPrice(productsToBuy,products){
+function getTotalPrice(productsToBuy,products,req){
     let totalPrice = 0;
     for(let i of productsToBuy){
         let product = products.find(item=>item._id.toString() == i.productID);
 
         totalPrice += product.price * i.quantity;
+    }
+
+    //hacemos el descuento del 15 porciento
+    if(req.session.rol == "Premium"){
+        totalPrice = totalPrice * 0.75;
     }
 
     return totalPrice;
@@ -279,7 +284,7 @@ export class carManager{
         //obtenemos todos los productos que se desean comprar
         let productsFound = await getAllProductsModel(productsToBuy)
 
-        let totalPrice = getTotalPrice(productsToBuy,productsFound);
+        let totalPrice = getTotalPrice(productsToBuy,productsFound,req);
 
         let failProducts = verifyStock(productsToBuy,productsFound);
 
