@@ -75,8 +75,10 @@ export async function changeValues(newData,product){
     if(typeof newData != "object" || Object.values(newData).length == 0){
         throw new Error("Por favor ingrese un objeto con propiedades");
     }
-    //eliminamos la propiedad id
-    delete newData.id
+    //eliminamos el id en caso de que exista
+    if(newData._id){
+        delete newData._id
+    }
     
     //obtenemos las propiedades del producto a modificar
     let properties = Object.keys(product._doc);

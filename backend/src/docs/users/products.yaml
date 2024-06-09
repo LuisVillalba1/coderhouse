@@ -1,0 +1,290 @@
+paths:
+  /products/:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Products
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: number
+            format: int32
+          description: Cantidad de productos a mostrar
+        - name: page
+          in: query
+          schema:
+            type: number
+            format: int32
+          description: Página actual
+        - name: query
+          in: query
+          schema:
+            type: string
+          description: criterio de busqueda
+        - name: sort
+          in: query
+          schema:
+            type: string
+          description: Criterio de ordenamiento
+      responses:
+        200:
+          description: Productos obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  docs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  totalDocs:
+                    type: number
+                    description: Total de registros
+                    example: 1400
+                  limit:
+                    type: number
+                    description: Cantidad de registros por página
+                    example: 10
+                  totalPages:
+                    type: number
+                    description: Total de páginas
+                    example: 104
+                  page:
+                    type: number
+                    description: Página actual
+                    example: 1
+                  pagingCounter:
+                    type: number
+                    description: Total de registros
+                    example: 1
+                  hasPrevPage:
+                    type: boolean
+                    description: ¿Tiene página anterior?
+                    example: false
+                  hasNextPage:
+                    type: boolean
+                    description: ¿Tiene página posterior?
+                    example: true
+                  prevPage:
+                    type: number
+                    description: Página anterior
+                    example: 1
+                  nextPage:
+                    type: number
+                    description: Página posterior
+                    example: 2
+        400:
+          description: Error en la petición
+        500:
+          description: Error en el servidor
+    post:
+      summary: Crea un nuevo producto (solo usuario administrador)
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductPost'
+  /products/{id}:
+    get:
+      summary: Obtiene un solo producto
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          description: El id del producto a buscar
+      responses:
+        200:
+          description: producto obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        404:
+          description: Error al obtener el producto
+        500:
+          description: Error en el servidor
+    put:
+      summary: Actualiza un solo producto (solo usuario administrador)
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          description: El id del producto a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductPut'
+        
+      responses:
+        201:
+          description: Producto actualizado correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  _id: ObjectId("sadklgjñdas45l43asdgklj")
+                  category: "procesadores"
+                  title: "Amd ryzen 3700"
+                  description: "Procesador Amd tercera generacion"
+                  price: 75000
+                  code: "asdsdjglkasd234sdajklñ"
+                  stock: 400
+                  status: true
+                  thumbnails: ["1708346991743Procesador-ryzen-3700x.png"]
+
+        404:
+          description: Error al actualizar el producto
+        500:
+          description: Error en el servidor
+    delete:
+      summary: Elimina un solo producto (solo usuario administrador)
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          description: El id del producto a eliminar
+      responses:
+        200:
+          description: Producto eliminado correctamente
+        404:
+          description: Error al eliminar el producto
+        500:
+          description: Error en el servidor
+  /poducts/mockingproducts/:
+    post:
+      summary: Creamos 100 productos aleatorios (solo usuario administrador)
+      tags:
+        - Products
+      responses:
+        201:
+          description: Productos creados correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de respuesta
+                example:
+                  message: "Se han creado 100 productos"
+        500:
+          description: Error al crear los productos
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id: 
+          type: string
+          description: El id del producto
+        title:
+          type: string
+          description: Título del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        code:
+          type: string
+          description: Código del producto
+        stock:
+          type: number
+          description: Cantidad de productos
+        status:
+          type: boolean
+          description: Estatus del producto (true or false)
+        thumbnails: 
+          type: array
+          description: Imagenes del producto
+      example:
+        _id: ObjectId("asdsdjglkasd234sdajklñ")
+        title: "Amd ryzen 3600"
+        description: "Procesador Amd tercera generacion"
+        price: 70000
+        code: "asdsdjglkasd234sdajklñ"
+        stock: 100
+        status: true
+        thumbnails: ["1708347979621Procesador-Ryzen-3600.png"]
+    ProductPost:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Categoría del producto
+        title:
+          type: string
+          description: Título del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        code:
+          type: string
+          description: Código del producto
+        stock:
+          type: number
+          description: Cantidad de productos
+        thumbnail:
+          type: string
+          description: Imagen del producto
+      example:
+        category: "procesadores"
+        title: "Amd ryzen 3700"
+        description: "Procesador Amd tercera generacion"
+        price: 70000
+        code: "asdsdjglkasd234sdajklñ"
+        stock: 100
+        thumbnail: "1708347979621Procesador-Ryzen-3700.png"
+    ProductPut:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Categoría del producto
+        title:
+          type: string
+          description: Título del Producto
+        description:
+          type: string
+          description: Descripción del Producto
+        price:
+          type: number
+          description: Precio del Producto
+        code:
+          type: string
+          description: Código del Producto
+        stock:
+          type: number
+          description: Cantidad de productos
+        thumbnail:
+          type: string
+          description: Imagen del Producto
+      example:
+        category: "procesadores"
+        title: "Amd ryzen 3700"
+        description: "Procesador Amd tercera generacion"
+        price: 75000
+        code: "asdsdjglkasd234sdajklñ"
+

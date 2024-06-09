@@ -193,7 +193,7 @@ export class carManager{
             //modificamos el carrito
             await cartsModel.findByIdAndUpdate(cart._id,cart);
 
-            return res.send("Se ha añadido el producto correctamente");
+            return res.status(201).send("Se ha añadido el producto correctamente");
 
         }
         catch(e){

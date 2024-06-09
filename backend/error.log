@@ -3,3 +3,12 @@ error: Usuario no loggeado
 error: Usuario no loggeado
 error: Error
 error: Error en /logger - Sun May 26 2024 15:54:53 GMT-0300 (hora estándar de Argentina)
+error: TypeError: Cannot read properties of undefined (reading 'status') en /65e730ff5e6a31784a321fd8 - Fri Jun 07 2024 10:28:10 GMT-0300 (hora estándar de Argentina)
+error: TypeError: Cannot read properties of undefined (reading 'status') en /65e730ff5e6a31784a321fd8 - Fri Jun 07 2024 10:28:28 GMT-0300 (hora estándar de Argentina)
+error: TypeError: Cannot read properties of undefined (reading 'status') en /65e730ff5e6a31784a321fd8 - Fri Jun 07 2024 10:29:47 GMT-0300 (hora estándar de Argentina)
+error: CastError: Cast to ObjectId failed for value "prueba" (type string) at path "_id" for model "products" en /prueba - Fri Jun 07 2024 10:51:24 GMT-0300 (hora estándar de Argentina)
+error: CastError: Cast to ObjectId failed for value "prueba" (type string) at path "_id" for model "products" en /prueba - Fri Jun 07 2024 10:52:14 GMT-0300 (hora estándar de Argentina)
+error: CastError: Cast to ObjectId failed for value "prueba" (type string) at path "_id" for model "products" en /prueba - Fri Jun 07 2024 10:52:15 GMT-0300 (hora estándar de Argentina)
+error: CastError: Cast to ObjectId failed for value "prueba" (type string) at path "_id" for model "products" en /prueba - Fri Jun 07 2024 10:52:37 GMT-0300 (hora estándar de Argentina)
+error: CastError: Cast to ObjectId failed for value "prueba" (type string) at path "_id" for model "products" en /prueba - Fri Jun 07 2024 10:52:37 GMT-0300 (hora estándar de Argentina)
+error: CastError: Cast to ObjectId failed for value "prueba(65e730ff5e6a31784a321fd8" (type string) at path "_id" for model "products" en /prueba(65e730ff5e6a31784a321fd8 - Fri Jun 07 2024 10:54:50 GMT-0300 (hora estándar de Argentina)

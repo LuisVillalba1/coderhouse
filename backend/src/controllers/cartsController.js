@@ -7,6 +7,29 @@ export async function createCart(){
     return newCart._id;
 }
 
+export async function addOneProduct(cid,pid){
+    let cart = new carManager();
+    //obtenemos los productos del carrito
+    let createProducts = await cart.getProductsCart(cid);
+
+    await cart.getProduct(pid);
+
+    //modificamos la cantidad en caso de que ya se haya agregado o agregamos el producto al carrito
+    if(createProducts.length > 0){
+        for(let i in createProducts){
+            if(createProducts[i].productID == body.productID){
+                createProducts[i].productID.quantity += 1;
+            }
+        }
+    }else{
+        createProducts.push({productID : body.productID,quantity : 1});
+    }
+    //actualizamos el carrito
+    await cartsModel.findByIdAndUpdate(cid,{products : createProducts});
+    return "producto añadido correctamente"
+}
+
+
 //obtenemos cierto carrito
 export async function getCart(cid){
     const cart = new carManager();

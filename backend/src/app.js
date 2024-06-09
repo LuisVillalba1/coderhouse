@@ -13,6 +13,8 @@ import dotenv from "dotenv";
 import initializatePassport from "./config/passport/passport.js";
 import { dotenvValues } from "./config.js";
 import { addLogger } from "./utils/logger.js";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
 import cors from "cors";
 const app = express();
 
@@ -79,6 +81,17 @@ io.on("connection",async (socket)=>{
     })
 })
 
+const swaggerOptions = {
+    definition : {
+        openapi : "3.1.0",
+        info : {
+            title : "Ecommerce API",
+            description : "Ecommerce Coderhouse API Documentation",
+        },
+    },
+    apis : [`${__dirname}/docs/**/*.yaml`],
+}
+
 app.use(cors(corsOptions));
 app.use(session({
     secret : dotenvValues.MongoSecret,
@@ -105,8 +118,10 @@ app.set("view engine","handlebars");
 app.set("views",path.join(__dirname,"views"));
 ;
 
+const specs = swaggerJsdoc(swaggerOptions);
 
 //routes
+app.use("/apidocs",swaggerUiExpress.serve,swaggerUiExpress.setup(specs));
 app.use(indexRouter)
 
 

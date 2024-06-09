@@ -23,7 +23,7 @@ export async function getProductById(req,id,res){
         
         //si se encuentra el producto lo devolvemos, si no lanzamos una exepcion
         if(product){
-            return res.send(product);
+            return res.status(200).send(product);
         }
         
         return res.status(404).send("No se ha encontrado el producto");
@@ -43,10 +43,10 @@ export async function addProduct(req,product,res){
 }
 
 //modificamos un producto segun su id y nuevos valores ingresados
-export async function updateProduct(req,id,newData,res){
+export async function updateProduct(id,newData,res){
     let productManager = new ProductManager();
 
-    return await productManager.updateProduct(req,id,newData,res);
+    return await productManager.updateProduct(id,newData,res);
 }
 
 //eliminamos un producto segun el id
@@ -61,7 +61,7 @@ export async function deleteProduct(req,id,res){
         //lo emitimos en nuestro socket
         io.emit("deletedProduct",product._id);
 
-        return res.send("Se ha eliminado el producto :c");
+        return res.status(200).send("Se ha eliminado el producto :c");
     }
     catch(e){
         if(e instanceof Error){
@@ -93,6 +93,6 @@ export async function mockingProducts(res){
         return res.status(200).send({message : "Se han creados los productos con exito"});
     }
     catch(e){
-        return res.send({message : e.message})
+        return res.status(500).send({message : e.message})
     }
 }

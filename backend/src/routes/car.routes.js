@@ -9,24 +9,21 @@ const carRoute = "./src/database/car.json";
 //creamos un nuevo carrito
 carstRouter.post("/",async (req,res)=>{
     try{
-        return res.json({
+        return res.status(200).json({
             message : `El id de su carrito es: ${await cartController.createCart()}`
         })
     }
     catch(e){
         createLoggerError(req,e);
-        return res.json({message : "Ha ocurrido un error al crear el carrito"});
+        return res.status(500).json({message : "Ha ocurrido un error al crear el carrito"});
     }
 })
 
-//obtenemos cierto carrito
-carstRouter.get("/:cid",async(req,res)=>{
+//añadimos un producto al carrito
+carstRouter.post("/:cid/:pid",async(req,res)=>{
     try{
-        const {cid} = req.params
-    
-        const products = await cartController.getCart(cid);
-        
-        return res.render("cart",{products,css : "../css/cart.css",js : "../js/cart.js"});
+        let {cid,pid} = req.params
+        return res.status(201).send(await cartController.addOneProduct(cid,pid))
     }
     catch(e){
         if(e instanceof Error){
@@ -37,24 +34,42 @@ carstRouter.get("/:cid",async(req,res)=>{
     }
 })
 
-//modificamos la cantidad de productos en el carrito
-carstRouter.post("/:cid/product/:pid",async(req,res)=>{
+//obtenemos los productos de un carrito
+carstRouter.get("/:cid",async(req,res)=>{
     try{
+        const {cid} = req.params
+    
+        const products = await cartController.getCart(cid);
         
-    //obtenemos la cantidad del producto que se desea añadir
-    const {quantity} = req.body;
-    const {cid,pid} = req.params;
-
-    return await cartController.changeProductQuantity(quantity,cid,pid,res);
+        return res.status(200).send(products);
     }
     catch(e){
         if(e instanceof Error){
-            return res.status(404).send({message : e.message})
+            return res.status(404).send(e.message)
         }
-        createLoggerError(req,e)
-        return res.status(500).send({message : "Ha ocurrido un erorr inesperado"});
+        createLoggerError(req,e);
+        return res.status(500).send("Ha ocurrido un error")
     }
 })
+
+// //modificamos la cantidad de productos en el carrito
+// carstRouter.post("/:cid/product/:pid",async(req,res)=>{
+//     try{
+        
+//     //obtenemos la cantidad del producto que se desea añadir
+//     const {quantity} = req.body;
+//     const {cid,pid} = req.params;
+
+//     return await cartController.changeProductQuantity(quantity,cid,pid,res);
+//     }
+//     catch(e){
+//         if(e instanceof Error){
+//             return res.status(404).send({message : e.message})
+//         }
+//         createLoggerError(req,e)
+//         return res.status(500).send({message : "Ha ocurrido un erorr inesperado"});
+//     }
+// })
 
 //eliminamos un producto de un carrito
 carstRouter.delete("/:cid/product/:pid",async (req,res)=>{
@@ -63,7 +78,7 @@ carstRouter.delete("/:cid/product/:pid",async (req,res)=>{
 
         await cartController.deleteProduct(cid,pid);
         
-        return res.send("Se ha eliminado el producto correctamente")
+        return res.status(200).send("Se ha eliminado el producto correctamente")
     }
     catch(e){
         if(e instanceof Error){
@@ -81,7 +96,7 @@ carstRouter.delete("/:cid",async(req,res)=>{
 
         await cartController.deleteAllProducts(cid);
 
-        return res.send("se han eliminado todos los productos del carrito")
+        return res.status(200).send("se han eliminado todos los productos del carrito")
     }
     catch(e){
         if(e instanceof Error){
@@ -112,7 +127,7 @@ carstRouter.put("/:cid",async(req,res)=>{
 })
 
 //actualizamos la cantidad de un producto que se encuentra en el carrito
-carstRouter.put("/:cid/products/:pid",async(req,res)=>{
+carstRouter.put("/:cid/product/:pid",async(req,res)=>{
     try{
         const {body} = req;
         const {cid,pid} = req.params;
@@ -131,7 +146,7 @@ carstRouter.put("/:cid/products/:pid",async(req,res)=>{
 })
 
 //permitimos al usuario comprar los productos del carrito
-carstRouter.post("/:cid/purcharse",async(req,res)=>{
+carstRouter.post("/:cid/purchase",async(req,res)=>{
     try{
         const {cid} = req.params;
 

@@ -13,14 +13,14 @@ export const useProductStore = defineStore("products",{
     },
     actions : {
         async getProducts(){
-            const response = await axios.get("/products/details")
+            const response = await axios.get("/products")
             this.products.push(...response.data.docs);
             this.nextPage = response.data.nextPage;
             return response;
         },
         async getMoreProducts(noMoreProducts){
             noMoreProducts.value = true
-            const response = await axios.get('/products/details?page=' + this.nextPage);
+            const response = await axios.get('/products?page=' + this.nextPage);
             noMoreProducts.value = false
             let docs = response.data.docs;
             let nextPageResponse = response.data.nextPage;
