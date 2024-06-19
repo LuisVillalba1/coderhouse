@@ -134,7 +134,7 @@ export function saveGithubValues(req){
 export async function getCurrentUser(req,res){
     if(req.session.user){
         const user = await userModel.findOne({email : req.session.user}).lean();
-        return res.send(user);
+        return res.status(200).send(user);
     }
     req.logger.error("Usuario no loggeado");
     return res.status(404).send(false);

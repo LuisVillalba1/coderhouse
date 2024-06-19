@@ -9,7 +9,7 @@ const carRoute = "./src/database/car.json";
 //creamos un nuevo carrito
 carstRouter.post("/",async (req,res)=>{
     try{
-        return res.status(200).json({
+        return res.status(201).json({
             message : `El id de su carrito es: ${await cartController.createCart()}`
         })
     }
@@ -23,9 +23,10 @@ carstRouter.post("/",async (req,res)=>{
 carstRouter.post("/:cid/:pid",async(req,res)=>{
     try{
         let {cid,pid} = req.params
-        return res.status(201).send(await cartController.addOneProduct(cid,pid))
+        return res.status(201).send({message : await cartController.addOneProduct(cid,pid)})
     }
     catch(e){
+        console.log(e);
         if(e instanceof Error){
             return res.status(404).send(e.message)
         }
@@ -78,7 +79,7 @@ carstRouter.delete("/:cid/product/:pid",async (req,res)=>{
 
         await cartController.deleteProduct(cid,pid);
         
-        return res.status(200).send("Se ha eliminado el producto correctamente")
+        return res.status(200).send({message : "Se ha eliminado el producto correctamente"});
     }
     catch(e){
         if(e instanceof Error){

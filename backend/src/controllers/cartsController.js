@@ -17,12 +17,12 @@ export async function addOneProduct(cid,pid){
     //modificamos la cantidad en caso de que ya se haya agregado o agregamos el producto al carrito
     if(createProducts.length > 0){
         for(let i in createProducts){
-            if(createProducts[i].productID == body.productID){
+            if(createProducts[i].productID == pid){
                 createProducts[i].productID.quantity += 1;
             }
         }
     }else{
-        createProducts.push({productID : body.productID,quantity : 1});
+        createProducts.push({productID : pid,quantity : 1});
     }
     //actualizamos el carrito
     await cartsModel.findByIdAndUpdate(cid,{products : createProducts});

@@ -30,3 +30,12 @@ error: CastError: Cast to ObjectId failed for value "prueba" (type string) at pa
 error: CastError: Cast to ObjectId failed for value "prueba" (type string) at path "_id" for model "products" en /prueba - Fri Jun 07 2024 10:52:37 GMT-0300 (hora estándar de Argentina)
 error: CastError: Cast to ObjectId failed for value "prueba" (type string) at path "_id" for model "products" en /prueba - Fri Jun 07 2024 10:52:37 GMT-0300 (hora estándar de Argentina)
 error: CastError: Cast to ObjectId failed for value "prueba(65e730ff5e6a31784a321fd8" (type string) at path "_id" for model "products" en /prueba(65e730ff5e6a31784a321fd8 - Fri Jun 07 2024 10:54:50 GMT-0300 (hora estándar de Argentina)
+error: Usuario no loggeado
+error: Usuario no loggeado
+error: Usuario no loggeado
+error: Usuario no loggeado
+error: Usuario no loggeado
+error: Usuario no loggeado
+error: Usuario no loggeado
+error: Usuario no loggeado
+error: Usuario no loggeado

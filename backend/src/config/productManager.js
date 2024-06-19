@@ -223,7 +223,7 @@ export class ProductManager{
 }
 
     //creamos un nuevo producto
- async addProduct(product,res){
+ async addProduct(req,product,res){
     try{
         //mostramos que propiedades son validas ingresar
         chekIncorrectPropertys(product);
@@ -244,11 +244,11 @@ export class ProductManager{
             let newProduct = await productModel.create(product);
 
             io.emit("newProduct",newProduct)
-            return res.send("Producto añadido con exito")
+            return res.status(201).send({message : "Producto añadido con exito"})
         }
         //en caso de que ya exista, modificamos su stock
         await productModel.findByIdAndUpdate(productFound.id,{stock : product.stock})
-        return res.send("Producto añadido con exito")
+        return res.status(201).send({message : "Producto añadido con exito"});
     }
     catch(e){
         if(e instanceof Error){
