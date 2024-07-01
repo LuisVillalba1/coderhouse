@@ -52,9 +52,10 @@ sessionRoute.get("/current",async(req,res)=>{
     return await sessionController.getCurrentUser(req,res);
 })
 
+
 //eliminamos la session de un usuario
 sessionRoute.delete("/deleteSession",async(req,res)=>{
-    return sessionController.deleteSession(req,res);
+    return await sessionController.deleteSession(req,res);
 })
 
 export default sessionRoute;

@@ -141,7 +141,10 @@ export async function getCurrentUser(req,res){
 }
 
 //eliminamos la session del usuario 
-export function deleteSession(req,res){
+export async function deleteSession(req,res){
+    const user = await userModel.findOne({email : req.session.user});
+    user.last_connection = new Date();
+    await user.save();
     req.session.destroy(e=>{
         if(e){
             return res.status(500).send({message : "Ha ocurrido un error al eliminar la session"})

@@ -49,11 +49,13 @@ const initializatePassport = ()=>{
     },
     async(email,password,done)=>{
         try{
-            const user = await userModel.findOne({email : email}).lean();
-
+            const user = await userModel.findOne({email : email});
             if(!user || !await compareHashValue(password,user.password)){
                 return done(null,false,{message : "Usuario o contraseña invalidos"})
             }
+            user.last_connection = new Date();
+
+            await user.save();
             return done(null,user)
         }
         catch(e){
@@ -68,9 +70,11 @@ const initializatePassport = ()=>{
         callbackURL : "http://localhost:8080/githubcallback",
     },async(accesToken,refreshToken,profile,done)=>{
         try{
-            const user = await userModel.findOne({email : profile._json.email}).lean();
+            const user = await userModel.findOne({email : profile._json.email});
 
             if(user){
+                user.last_connection = new Date();
+                await user.save();
                 return done(null,user);
             }
 

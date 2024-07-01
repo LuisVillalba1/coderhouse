@@ -6,6 +6,9 @@ import sessionRoute from "./session.routes.js";
 import { verificationSession } from "../middlewares/sessionMiddleware.js";
 import { userMiddleware } from "../middlewares/userMiddleware.js";
 import { createLoggerWarning,createLoggerError} from "../utils/logger.js";
+import userRouter from "./user.routes.js";
+import multerRouter from "./multer.routes.js";
+import { adminMiddleware } from "../middlewares/adminMiddleware.js";
 
 const indexRouter = Router();
 
@@ -21,6 +24,8 @@ indexRouter.get("/logger",(req,res)=>{
 indexRouter.use("/carts",userMiddleware,carstRouter);//solo los usuario van a poder agregar productos o modificar su carrito
 indexRouter.use("/products",verificationSession,productRouter)//verificamos que se haya iniciado session
 indexRouter.use("/message",messageRoute);
+indexRouter.use("/user",userRouter);
+indexRouter.use("/multer",multerRouter)
 indexRouter.use("/",sessionRoute);
 
 

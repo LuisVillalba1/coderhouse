@@ -19,7 +19,7 @@ import cors from "cors";
 const app = express();
 
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+export const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PORT = 8080;
 
@@ -105,6 +105,7 @@ app.use(session({
 
 //middlewares
 app.use(express.json());
+app.use("/static",express.static(path.join(__dirname,"public")));
 
 //passport
 initializatePassport();
