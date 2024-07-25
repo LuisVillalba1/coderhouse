@@ -69,25 +69,6 @@ carstRouter.get("/:cid",async(req,res)=>{
     }
 })
 
-// //modificamos la cantidad de productos en el carrito
-// carstRouter.post("/:cid/product/:pid",async(req,res)=>{
-//     try{
-        
-//     //obtenemos la cantidad del producto que se desea añadir
-//     const {quantity} = req.body;
-//     const {cid,pid} = req.params;
-
-//     return await cartController.changeProductQuantity(quantity,cid,pid,res);
-//     }
-//     catch(e){
-//         if(e instanceof Error){
-//             return res.status(404).send({message : e.message})
-//         }
-//         createLoggerError(req,e)
-//         return res.status(500).send({message : "Ha ocurrido un erorr inesperado"});
-//     }
-// })
-
 //eliminamos un producto de un carrito
 carstRouter.delete("/:cid/product/:pid",async (req,res)=>{
     try{
