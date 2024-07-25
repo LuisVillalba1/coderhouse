@@ -26,6 +26,9 @@
     --rojo : rgb(255, 13, 0);
 }
 
+.notification{
+    background: var(--verde);
+}
 
 @keyframes showLabel{
     from {

@@ -1,3 +1,7 @@
+import { userModel } from "../models/userModel.js";
+import { mailer } from "./mailer.js";
+import { dotenvValues } from "../config.js";
+
 export class UserManager {
     constructor() {
 
@@ -33,6 +37,31 @@ export class UserManager {
             if(documents[i].name.length == 0 || documents[i].reference.length == 0){
                 throw new Error("Todos los campos son obligatorios")
             }
+        }
+    }
+    //enviamos un email a los usuarios, informandoles que su cuenta fue eliminada por inactividad
+    async sendEmailDeleteAccount(emails){
+        for(let i of emails){
+            let mail = await mailer.sendMail({
+                from : `coderhouseProyect <${dotenvValues.Email}>`,
+                to : i,
+                subject : "Cuenta eliminada por inactividad",
+                html : `
+                    <p>Su cuenta en la aplicación ha sido eliminada por inactividad</p>`
+            })
+        }
+    }
+    //buscamos aquellos usuario que no se conecten hace dos dias
+    async deleteUsersInactives(){
+        //obtenemos aquellos usuarios
+        let users = await userModel.find({last_connection : {$lt : new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)}});
+        let emails = [];
+        if(users.length > 0){
+            //eliminamos los usuarios
+            await userModel.deleteMany({last_connection : {$lt : new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)}});
+            //enviamos el email para informar a los usuarios que su cuenta ha sido eliminada
+            emails = users.map(item=>item.email);
+            this.sendEmailDeleteAccount(emails);
         }
     }
 }

@@ -5,7 +5,7 @@ import ProductsView from '@/views/app/ProductsView.vue'
 import { useAuth } from '@/stores/Auth'
 import RecuperatePassword from '@/views/RecuperatePassword.vue'
 import ChangePasswordView from "@/views/ChangePasswordView.vue"
-
+import UserCartView from '@/views/app/UserCartView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +45,14 @@ const router = createRouter({
       path : "/products",
       name : "products",
       component : ProductsView,
+      meta : {
+        authentication : true
+      }
+    },
+    {
+      path : "/cart",
+      name : "userCart",
+      component : UserCartView,
       meta : {
         authentication : true
       }

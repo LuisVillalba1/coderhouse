@@ -14,13 +14,11 @@ export async function addOneProduct(cid,pid){
 
     await cart.getProduct(pid);
 
+    //obtenemos el producto en caso de que ya se haya agregado al carrito
+    let productFound = createProducts.find(product => product.productID._id.equals(pid));
     //modificamos la cantidad en caso de que ya se haya agregado o agregamos el producto al carrito
-    if(createProducts.length > 0){
-        for(let i in createProducts){
-            if(createProducts[i].productID == pid){
-                createProducts[i].productID.quantity += 1;
-            }
-        }
+    if(productFound){
+        createProducts.find(product => product.productID._id.equals(pid)).quantity += 1
     }else{
         createProducts.push({productID : pid,quantity : 1});
     }
@@ -83,6 +81,10 @@ export async function changeQuantity(cid,pid,body){
 
 export async function purcharseProducts(cid,req,res){
     let cartFound = await cartsModel.findById(cid);
+
+    if(!cartFound){
+        throw new Error("No se ha encontrado el carrito solicitado");
+    }
 
     let cart = new carManager();
 

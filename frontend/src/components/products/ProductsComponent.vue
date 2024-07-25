@@ -18,7 +18,7 @@
                         <p>${{ item.price }}</p>
                     </div>
                 </transition>
-                <div class="add_cart" :class="{'add_cart_hover' : isHover[index] }" @mouseenter="currentHover(index,true)" @mouseleave="currentHover(index,false)">
+                <div class="add_cart" :class="{'add_cart_hover' : isHover[index] }" @click="addProduct(item._id)" @mouseenter="currentHover(index,true)" @mouseleave="currentHover(index,false)">
                     <div class="add_cart_content">
                         <p>Añadir al carrito</p>
                     </div>
@@ -41,6 +41,8 @@
     import LoaderComponent from "../loaders/LoaderComponent.vue";
     import {ref,defineExpose, reactive,watch} from "vue";
     import { useProductStore } from "@/stores/Products";
+    import { useCartStore } from "@/stores/cartStore";
+    import { toast } from "vue3-toastify";
     import { intersectionProducts } from "../../composables/IntersectionProducts";
 
     let isHover = ref([])
@@ -48,6 +50,7 @@
     let noMoreProducts = ref(false)
 
     let productStore = useProductStore();
+    let cartStore = useCartStore();
 
     const currentHover = (index,value)=>{
         isHover.value[index] = value
@@ -60,6 +63,26 @@
 
     defineExpose({getMoreProducts})
 
+    async function addProduct(id){
+        try{
+            await cartStore.addProduct(id);
+            succesAddProduct();
+        }
+        catch(e){
+            console.log(e);
+            toast.error("Error al agregar al carrito",{
+                autoClose:2000,
+                theme : "dark"
+            });
+        }
+    }
+
+    function succesAddProduct(){
+        toast.success("Producto añadido al carrito con exito",{
+            autoClose:2000,
+            theme : "dark",
+        });
+    }
 
 </script>
 

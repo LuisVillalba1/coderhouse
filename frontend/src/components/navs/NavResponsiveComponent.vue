@@ -17,16 +17,38 @@
                 </div>
                 <div class="lane_container"></div>
                 <div class="nav_options">
-                    <template v-for="(item,index) in props.optionsNav" :key="index">
-                    <div class="nav_option">
+                    <RouterLink class="nav_option" :to="{name : 'products'}">
                         <div class="icon_container">
-                            <v-icon :name="item.icon" hover animation="flash" fill="black"></v-icon>
+                            <v-icon name="bi-shop" hover animation="flash" fill="black"></v-icon>
                         </div>
                         <div class="option_content">
-                            <h4>{{ item.name }}</h4>
+                            <h4>Productos</h4>
+                        </div>
+                    </RouterLink>
+                    <RouterLink class="nav_option" :to="{name : 'userCart'}">
+                        <div class="icon_container">
+                            <v-icon name="hi-solid-shopping-cart" hover animation="flash" fill="black"></v-icon>
+                        </div>
+                        <div class="option_content">
+                            <h4>Mi carrito</h4>
+                        </div>
+                    </RouterLink>
+                    <RouterLink class="nav_option" :to="{name : 'products'}">
+                        <div class="icon_container">
+                            <v-icon name="vi-file-type-config" hover animation="flash" fill="black"></v-icon>
+                        </div>
+                        <div class="option_content">
+                            <h4>Configuracion</h4>
+                        </div>
+                    </RouterLink>
+                    <div class="nav_option" @click="closeUserSession">
+                        <div class="icon_container">
+                            <v-icon name="ri-logout-box-line" hover animation="flash" fill="black"></v-icon>
+                        </div>
+                        <div class="option_content">
+                            <h4>Cerrar sesion</h4>
                         </div>
                     </div>
-                </template>
                 </div>
             </div>
         </transition>
@@ -35,22 +57,23 @@
 
 <script setup>
     import HeaderResponsiveComponent from '../header/HeaderResponsiveComponent.vue';
-    import { defineProps,ref} from 'vue';
+    import { defineEmits,ref} from 'vue';
     import { useAuth } from '@/stores/Auth';
-
-    const props = defineProps({
-        optionsNav : Array
-    })
+    import { RouterLink } from 'vue-router';
 
     let navStatus = ref(false)
+
+    const emits = defineEmits(["closeSession"]);
+
+    function closeUserSession(){
+        emits("closeSession");
+    }
 
     const showNav = ()=>{
         navStatus.value = true
     }
 
     const authData = useAuth();
-
-
 
 </script>
 
@@ -121,6 +144,8 @@
         width: 100%;
         padding: 10px 0;
         align-items: center;
+        text-decoration: none;
+        cursor: pointer;
     }
 
     .icon_container{

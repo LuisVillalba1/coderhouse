@@ -4,7 +4,6 @@ import crypto from "crypto";
 const ticketSchema = new Schema({
     code : {
         type : String,
-        default : crypto.randomBytes(10).toString('hex'),
         unique : true
     },
     purchase_datetime : {
@@ -17,7 +16,8 @@ const ticketSchema = new Schema({
     },
     purcharser : {
         type : String,
-        require : true
+        require : true,
+        unique : false
     },
     products : [
         {

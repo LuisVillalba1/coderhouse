@@ -1,5 +1,6 @@
 <template>
-    <NavResponsiveComponent :optionsNav="optionsNavContainer" @closeSession="deleteSession"></NavResponsiveComponent>
+    <div class="nav">
+        <NavResponsiveComponent @closeSession="deleteSession"></NavResponsiveComponent>
     <div class="nav_tablet_container" :class="{'show_nav' : showData }">
         <div class="header_nav">
             <div class="vue_icon_container">
@@ -25,26 +26,33 @@
         </div>
         <div class="options_nav">
             <template v-for="(value,index) in optionsNavContainer" :key="value.name + index">
-                <div class="option_container" :class="{'option_container_show' : showData, 'option_container_ocult' : !showData}">
-                    <div :class="{'icon_container' : !showData, 'icon_container_show' : showData}" v-if="value.name == 'Cerrar sesion'" @click="deleteSession">
-                        <v-icon :name="value.icon" scale="1.5" fill="white"></v-icon>
-                    </div>
-                    <div :class="{'icon_container' : !showData, 'icon_container_show' : showData}" v-else>
+                <RouterLink :to="{name : value.nameRedirect}" class="option_container" :class="{'option_container_show' : showData, 'option_container_ocult' : !showData}">
+                    <div :class="{'icon_container' : !showData, 'icon_container_show' : showData}">
                         <v-icon :name="value.icon" scale="1.5" fill="white"></v-icon>
                     </div>
                     <transition name="show_names">
                         <div class="data_option_container" v-if="showData">
-                            <div class="data_option" v-if="value.name == 'Cerrar sesion'" @click="deleteSession">
-                                <h4>{{ value.name }}</h4>
-                            </div>
-                            <div class="data_option" v-else>
+                            <div class="data_option">
                                 <h4>{{ value.name }}</h4>
                             </div>
                         </div>
                     </transition>
-                </div>
+                </RouterLink>
             </template>
+            <div class="option_container delete_session" :class="{'option_container_show' : showData, 'option_container_ocult' : !showData}" @click="deleteSession">
+                <div :class="{'icon_container' : !showData, 'icon_container_show' : showData}">
+                    <v-icon name="ri-logout-box-line" scale="1.5" fill="white"></v-icon>
+                </div>
+                <transition name="show_names">
+                    <div class="data_option_container" v-if="showData">
+                        <div class="data_option">
+                            <h4>Cerrar sesion</h4>
+                        </div>
+                    </div>
+                </transition>
+            </div>
         </div>
+    </div>
     </div>
 </template>
 
@@ -52,6 +60,7 @@
     import NavResponsiveComponent from "./NavResponsiveComponent.vue";
     import {ref,onBeforeMount,reactive} from "vue";
     import { useAuth } from "@/stores/Auth";
+    import { RouterLink } from "vue-router";
 
     
     let showData  = ref(false)
@@ -59,20 +68,19 @@
     const optionsNavContainer = [
         {
             name : "Productos",
-            icon : "bi-shop"
+            icon : "bi-shop",
+            nameRedirect : "products"
         },
         {
             name : "Mi carrito",
-            icon : "hi-solid-shopping-cart"
+            icon : "hi-solid-shopping-cart",
+            nameRedirect : "userCart"
         },
         {
             name : "Configuracion",
-            icon : "vi-file-type-config"
+            icon : "vi-file-type-config",
+            nameRedirect : "products"
         },
-        {
-            name : "Cerrar sesion",
-            icon : "ri-logout-box-line"
-        }
     ]
     
     let userData = reactive({
@@ -195,6 +203,7 @@
         display: flex;
         align-items: center;
         cursor: pointer;
+        text-decoration: none;
     }
 
     .option_container:hover{

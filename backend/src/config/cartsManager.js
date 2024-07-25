@@ -29,7 +29,9 @@ function getTotalPrice(productsToBuy,products,req){
     let totalPrice = 0;
     for(let i of productsToBuy){
         let product = products.find(item=>item._id.toString() == i.productID);
-
+        if(!product){
+            throw new Error(`No se ha enocntrado el producto ${i.productID}`);
+        }
         totalPrice += product.price * i.quantity;
     }
 
@@ -37,6 +39,7 @@ function getTotalPrice(productsToBuy,products,req){
     if(req.session.rol == "Premium"){
         totalPrice = totalPrice * 0.75;
     }
+    
 
     return totalPrice;
 }
@@ -302,7 +305,7 @@ export class carManager{
         //generamos el ticket de compra
         let newTicket = new TicketManager();
 
-        newTicket.createTicket(productsToBuy,totalPrice,req.session.user);
+        await newTicket.createTicket(productsToBuy,totalPrice,req.session.user);
 
         //vaciamos el carrito
         cart.products = [];

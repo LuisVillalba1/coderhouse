@@ -29,3 +29,31 @@ export async function sendDocuments(req,res){
         return res.status(500).send(e)
     }
 }
+
+export async function getAllUsers(req,res){
+    try{
+        const users = await userModel.find().select("_id name lastName email");
+        return res.status(200).send(users);
+    }
+    catch(e){
+        if(e instanceof Error){
+            return res.status(404).send(e.message);
+        }
+
+        return res.status(500).send(e);
+    }
+}
+
+export async function deleteUsersNotActives(req,res){
+    try{
+        let userManager = new UserManager();
+        await userManager.deleteUsersInactives();
+        return res.status(200).send("hola");
+    }
+    catch(e){
+        if(e instanceof Error){
+            return res.status(404).send(e.message)
+        }
+        return res.status(500).send(e);
+    }
+}

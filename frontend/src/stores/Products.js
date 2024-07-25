@@ -1,8 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
-import { useLoading } from 'vue-loading-overlay';
-import { globalLoadingProps } from '@/loaderConfig';
+import { useAuth } from "./Auth.js";
 
 export const useProductStore = defineStore("products",{
     state : ()=>{
@@ -31,6 +30,6 @@ export const useProductStore = defineStore("products",{
             }else{
                 return true
             }
-        }
+        },
     }
 })

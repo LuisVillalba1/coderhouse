@@ -19,6 +19,22 @@ carstRouter.post("/",async (req,res)=>{
     }
 })
 
+//permitimos al usuario comprar los productos del carrito
+carstRouter.post("/:cid/purchase",async(req,res)=>{
+    try{
+        const {cid} = req.params;
+
+        return await cartController.purcharseProducts(cid,req,res);
+    }
+    catch(e){
+        if(e instanceof Error){
+            return res.status(404).send(e.message);
+        }
+        createLoggerError(req,e);
+        return res.status(500).send({message : "Ha ocurrido un error inesperado,por favor intentelo mas tarde"});
+    }
+})
+
 //añadimos un producto al carrito
 carstRouter.post("/:cid/:pid",async(req,res)=>{
     try{
@@ -146,21 +162,6 @@ carstRouter.put("/:cid/product/:pid",async(req,res)=>{
     }
 })
 
-//permitimos al usuario comprar los productos del carrito
-carstRouter.post("/:cid/purchase",async(req,res)=>{
-    try{
-        const {cid} = req.params;
-
-        return await cartController.purcharseProducts(cid,req,res);
-    }
-    catch(e){
-        if(e instanceof Error){
-            return res.status(404).send(e.message);
-        }
-        createLoggerError(req,e);
-        return res.status(500).send({message : "Ha ocurrido un error inesperado,por favor intentelo mas tarde"});
-    }
-})
 
 
 export default carstRouter

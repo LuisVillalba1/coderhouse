@@ -6,7 +6,8 @@ export const useAuth = defineStore("auth",{
     state : ()=>{
         return {
             name : '',
-            email : ''
+            email : '',
+            cartID : '',
         }
     },
     actions :{
@@ -48,6 +49,7 @@ export const useAuth = defineStore("auth",{
             const response = await axios.get("/current");
             this.name = response.data.name;
             this.email = response.data.email;
+            this.cartID = response.data.cart;
             return response
         },
     
