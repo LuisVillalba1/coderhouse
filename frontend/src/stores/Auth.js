@@ -59,6 +59,10 @@ export const useAuth = defineStore("auth",{
         async deleteSession(){
             const response = await axios.delete("/deleteSession");
             return router.push("/login");
+        }, 
+        async isAdmin(){
+            const response = await axios.get("/isAdmin");
+            return response
         }
     },
     persist : true,

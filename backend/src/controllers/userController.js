@@ -57,3 +57,18 @@ export async function deleteUsersNotActives(req,res){
         return res.status(500).send(e);
     }
 }
+
+//eliminamos un usuario
+export async function deleteUser(req,res){
+    try{
+        let user = await userModel.findById(req.params.id);
+        if(!user){
+            return res.status(404).send({message : "Usuario no encontrado"})
+        }
+        await userModel.deleteOne({_id : req.params.id});
+        return res.status(200).send({message : "Usuario eliminado"});
+    }
+    catch(e){
+        return res.status(500).send({message : e.message})
+    }
+}

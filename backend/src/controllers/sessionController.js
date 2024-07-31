@@ -154,3 +154,10 @@ export async function deleteSession(req,res){
         }
     })
 }
+
+export function isAdmin(req,res){
+    if(req.session.rol == "admin"){
+        return res.status(200).send({message : "Tiene permisos de administrador"});
+    }
+    return res.status(401).send({message : "No tiene permisos de administrador"});
+}

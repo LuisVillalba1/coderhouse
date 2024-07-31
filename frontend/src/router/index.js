@@ -56,6 +56,25 @@ const router = createRouter({
       meta : {
         authentication : true
       }
+    },
+    {
+      path : "/admin",
+      name : "admin",
+      component : () => import("../views/app/admin/AdminView.vue"),
+      meta : {
+        authentication : true
+      },
+      beforeEnter : async(to,from,next)=>{
+        const auth = useAuth();
+        try{
+          //solo el administrador podra ingresar a la ruta
+          const response = await auth.isAdmin();
+          return next();
+        }
+        catch(e){
+          return next("/products");
+        }
+      }
     }
   ]
 })

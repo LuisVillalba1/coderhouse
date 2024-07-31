@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {sendDocuments,getAllUsers,deleteUsersNotActives} from "../controllers/userController.js";
+import {sendDocuments,getAllUsers,deleteUsersNotActives,deleteUser} from "../controllers/userController.js";
 import { adminMiddleware } from "../middlewares/adminMiddleware.js";
 
 const userRouter = Router();
@@ -17,5 +17,11 @@ userRouter.get("/allUsers",async(req,res)=>{
 userRouter.get("/deleteUsersNotActives",adminMiddleware,async(req,res)=>{
     return await deleteUsersNotActives(req,res);
 })
+
+//eliminamos un usuario, solo el administrador podra hacerlo
+userRouter.delete("/deleteUser/:id",adminMiddleware,async(req,res)=>{
+    return await deleteUser(req,res);
+})
+
 
 export default userRouter

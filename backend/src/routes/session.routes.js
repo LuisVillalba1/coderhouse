@@ -58,4 +58,9 @@ sessionRoute.delete("/deleteSession",async(req,res)=>{
     return await sessionController.deleteSession(req,res);
 })
 
+sessionRoute.get("/isAdmin",async(req,res)=>{
+    return await sessionController.isAdmin(req,res);
+})
+
+
 export default sessionRoute;

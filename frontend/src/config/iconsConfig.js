@@ -4,9 +4,9 @@ import {
     CoMediaStepBackward, BiGithub, BiShop, HiSolidShoppingCart, ViFileTypeConfig,
     FaGreaterThan, FaUserCircle, IoOptionsOutline, IoClose, RiLogoutBoxLine
     , BiSkipForward, ViFileTypeVue, MdEmailOutlined, BiEyeFill,BiEyeSlashFill,RiSubtractFill,MdAddOutlined,
-    BiTrashFill    
+    BiTrashFill,BiSearch    
 } from "oh-vue-icons/icons";
 
 addIcons(CoMediaStepBackward, BiGithub, BiShop, HiSolidShoppingCart, ViFileTypeConfig, FaGreaterThan,
      RiLogoutBoxLine,FaUserCircle, IoOptionsOutline, IoClose, BiSkipForward, ViFileTypeVue,
-      MdEmailOutlined,BiEyeFill,BiEyeSlashFill,RiSubtractFill,MdAddOutlined,BiTrashFill );
+      MdEmailOutlined,BiEyeFill,BiEyeSlashFill,RiSubtractFill,MdAddOutlined,BiTrashFill,BiSearch  );
